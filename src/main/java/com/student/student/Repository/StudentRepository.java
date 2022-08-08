@@ -5,6 +5,7 @@ import com.student.student.Repository.JDBC.ConnectionManipulator;
 import com.student.student.Repository.JDBC.RSToList;
 import com.student.student.Repository.JDBC.StatementCreator;
 
+import javax.swing.text.html.Option;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,8 +39,9 @@ public class StudentRepository implements StudentSimpleRepository {
   @Override
   public Optional<String> findById(long id) {
     try{
-    ResultSet resultSet = stm.executeQuery("select * from student where id ="+id);
-    return RSToList.resultToList(resultSet,columns);
+    ResultSet resultSet = stm.executeQuery("select * from student where id ="+id+" limit 0");
+    List<String> list = RSToList.resultToList(resultSet,columns);
+    return Optional.of(list.get(0));
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
